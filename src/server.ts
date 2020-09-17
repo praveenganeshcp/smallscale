@@ -1,8 +1,25 @@
 import { Server, createServer, RequestListener, IncomingMessage, ServerResponse }  from 'http';
+import * as assert from 'assert';
+
+class FWResponse {
+    private response: ServerResponse;
+
+    sendJSON(data: Object) {
+        assert.strictEqual('object', typeof data, new Error(`Exptected Object but got ${typeof data}`))
+        this.response.setHeader("Content-Type", "application/json")
+        this.response.write(JSON.stringify(data));
+        this.response.end();
+    }
+
+    constructor(res: ServerResponse) {
+        this.response = res;
+    }
+}
+
 
 let reqListener: RequestListener = (request: IncomingMessage, response: ServerResponse) => {
-    response.write("Hello Praveen");
-    response.end();
+    let fwResponse: FWResponse = new FWResponse(response);
+    fwResponse.sendJSON({message:"hello Praveen"});
 }
 
 let server: Server = createServer(reqListener);
