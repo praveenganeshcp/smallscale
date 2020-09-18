@@ -1,7 +1,7 @@
 import { Server, createServer, RequestListener, IncomingMessage, ServerResponse }  from 'http';
 import * as assert from 'assert';
 
-class FWResponse {
+export class FWResponse {
     private response: ServerResponse;
 
     sendJSON(data: Object) {
