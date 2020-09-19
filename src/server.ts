@@ -9,3 +9,11 @@ export const controllers = {
     post: POST,
     put: PUT
 }
+
+controllers.get('/home?nam=p&mailgmail', (req, res) => {
+    res.sendJSON({
+        message: 'hello Praveen'
+    })
+})
+
+server.listen(3000, () => {console.log('on port 3000')});
