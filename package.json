@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon build/server.js"
   },
-  "private":true,
+  "private": true,
   "keywords": [
     "node",
     "backend",
@@ -17,10 +17,12 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^14.10.3",
-    "formidable": "^1.2.2",
-    "nodemon": "^2.0.4"
+    "formidable": "^1.2.2"
   },
   "files": [
     "build/**/*"
-  ]
+  ],
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }
