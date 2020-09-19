@@ -17,7 +17,8 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^14.10.3",
-    "formidable": "^1.2.2"
+    "formidable": "^1.2.2",
+    "url-router": "^11.0.3"
   },
   "files": [
     "build/**/*"

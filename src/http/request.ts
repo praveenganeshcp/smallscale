@@ -13,13 +13,15 @@ export class HttpRequest {
     private _body: RequestBody;
     private _pathname: string;
     private _query: Object;
+    private _params: Object;
 
     constructor(request: IncomingMessage, body: RequestBody) {
         this.request = request;
         this._url = request.url;
         this._method = request.method;
         this._body = body;
-        this.parseQuery(request);   
+        this.parseQuery(request);  
+        this._params = {}; 
     }
 
     private parseQuery(request: IncomingMessage) {
@@ -52,5 +54,17 @@ export class HttpRequest {
 
     get query() {
         return this._query;
+    }
+
+    set query(query) {
+        this._query = query;
+    }
+
+    set params(params) {
+        this._params = params;
+    }
+
+    get params() {
+        return this._params;
     }
 }

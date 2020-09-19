@@ -10,7 +10,8 @@ export const controllers = {
     put: PUT
 }
 
-controllers.get('/home?nam=p&mailgmail', (req, res) => {
+controllers.get('/home/:id/11/:name', (req, res) => {
+    console.log(req.params)
     res.sendJSON({
         message: 'hello Praveen'
     })
