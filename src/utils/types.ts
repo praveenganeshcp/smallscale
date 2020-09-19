@@ -1,0 +1,3 @@
+export enum HTTPMETHOD {
+    POST='POST', PUT='PUT', GET='GET', DELETE='DELETE'
+}
