@@ -3,7 +3,7 @@ import {server, controllers} from './server';
 controllers.delete('/home', (req, res)=>{
     res.sendJSON({message:"Success"});
 })
-controllers.get('/login', (req, res)=>{
+controllers.get('/login1', (req, res)=>{
     res.sendJSON({message:"From login"});
 })
 
