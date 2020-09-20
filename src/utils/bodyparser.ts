@@ -2,7 +2,12 @@ import { IncomingMessage } from "http";
 
 const formidable = require('formidable');
 
-export async function parseRequestBody(request: IncomingMessage) {
+interface RequestBody {
+    fields: any,
+    files: any
+}
+
+export async function parseRequestBody(request: IncomingMessage): Promise<RequestBody> {
     return new Promise((resolve, reject) => {
         const form = formidable({ 
             multiples: true, 

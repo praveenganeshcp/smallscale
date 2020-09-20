@@ -1,5 +1,5 @@
-import { HttpRequest } from "../http/request";
-import { HttpResponse } from "../http/response";
+import { RequestListener } from "http";
+
 const Router = require('url-router');
 
 export const mappings = {
@@ -9,11 +9,7 @@ export const mappings = {
     'DELETE': new Router()
 }
 
-export interface RequestHandler {
-    (request: HttpRequest, response: HttpResponse): void;
-}
-
-export function addRoute(url: string, method: string, handler: RequestHandler) {
+export function addRoute(url: string, method: string, handler: RequestListener) {
     url = url.trim();
     mappings[method].add(url, handler);
 }

@@ -1,25 +1,30 @@
-import { RequestListener, IncomingMessage, ServerResponse, METHODS } from "http";
-import { HttpRequest } from "../http/request";
-import { HttpResponse } from "../http/response";
+import { RequestListener } from "http";
 import { mappings } from './mappings';
 import { parseRequestBody } from "../utils/bodyparser";
 import { HTTPMETHOD } from '../utils/types';
+import { parseQuery } from "../utils/queryparser";
+import { HttpRequest } from "../http/request";
+import { HttpResponse } from "../http/response";
 
-export const reqListener: RequestListener = async (request: IncomingMessage, response: ServerResponse) => {
+
+export const reqListener: RequestListener = async (request: HttpRequest, response: HttpResponse) => {
     try {
-        let body: any = null;
         if(request.method == HTTPMETHOD.POST || request.method == HTTPMETHOD.PUT) {
-            body = await parseRequestBody(request);
+            request.body = await parseRequestBody(request);
         }
-        let httpRequest: HttpRequest = new HttpRequest(request, body);
-        let httpResponse: HttpResponse = new HttpResponse(response);
-        let routerResult: any = mappings[httpRequest.method].find(httpRequest.pathname);
+        let parseResult = parseQuery(request.url);
+        request.query = parseResult.query;
+        request.pathname = parseResult.pathname;
+        let routerResult: any = mappings[request.method].find(request.pathname);
         if(routerResult == null) {
-            httpResponse.sendJSON({message:"No handler found"});
+            response.sendJSON({
+                message: 'handler not found'
+            })
+            response.end();
         }
         else {
-            httpRequest.params = routerResult.params;
-            routerResult.handler.call({}, httpRequest, httpResponse);
+            request.params = routerResult.params;
+            routerResult.handler.call({}, request, response);
         }
     }
     catch(err) {
