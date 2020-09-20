@@ -23,9 +23,11 @@ export const reqListener: RequestListener = async (request: IncomingMessage, res
         }
     }
     catch(err) {
-        response.write({
-            message: 'Server error'
-        });
+        response.setHeader('Content-Type', 'application/json');
+        response.write(JSON.stringify({
+            message: 'Server error',
+            error: err.message
+        }));
         response.end();
     }
 }

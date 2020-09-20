@@ -13,19 +13,24 @@ export interface RequestHandler {
     (request: HttpRequest, response: HttpResponse): void;
 }
 
+function addRoute(url: string, method: string, handler: RequestHandler) {
+    url = url.trim();
+    mappings[method].add(url, handler);
+}
+
 export function GET(url: string, handler: RequestHandler) {
-    mappings.GET.add(url, handler);
+    addRoute(url, 'GET', handler);
 }
 
 export function POST(url: string, handler: RequestHandler) {
-    mappings.POST.add(url, handler);
+    addRoute(url, 'POST', handler);
 }
 
 export function PUT(url: string, handler: RequestHandler) {
-    mappings.PUT.add(url, handler);
+    addRoute(url, 'PUT', handler);
 }
 
 export function DELETE(url: string, handler: RequestHandler) {
-    mappings.DELETE.add(url, handler);
+    addRoute(url, 'DELETE', handler);
 }
 
