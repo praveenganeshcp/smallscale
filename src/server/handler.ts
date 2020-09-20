@@ -9,16 +9,18 @@ import { HttpResponse } from "../http/response";
 
 export const reqListener: RequestListener = async (request: HttpRequest, response: HttpResponse) => {
     try {
+        let body = null;
         if(request.method == HTTPMETHOD.POST || request.method == HTTPMETHOD.PUT) {
-            request.body = await parseRequestBody(request);
+            body = await parseRequestBody(request);
         }
+        request.body = body;
         let parseResult = parseQuery(request.url);
         request.query = parseResult.query;
         request.pathname = parseResult.pathname;
         let routerResult: any = mappings[request.method].find(request.pathname);
         if(routerResult == null) {
             response.sendJSON({
-                message: 'handler not found'
+                message: 'Handler not found'
             })
             response.end();
         }
