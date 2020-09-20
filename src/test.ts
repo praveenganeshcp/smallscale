@@ -1,10 +1,16 @@
-import {server, controllers} from './server';
+import {ApplicationServer, Route} from './server';
 
-controllers.delete('/home', (req, res)=>{
-    res.sendJSON({message:"Success"})
-})
-controllers.get('/login1', (req, res)=>{
-    res.sendJSON({message:"From login"});
-})
+let routes: Route[] = [
+    {
+        path: '/profile',
+        method: 'GET',
+        handler: (req, res) => {
+            res.sendJSON({
+                message:'Hello Praveen'
+            })
+        }
+    }
+]
 
-server.listen(4000, ()=>{console.log('on port 4000')});
+let appServer: ApplicationServer = ApplicationServer.createServer(routes);
+appServer.listen(3000, ()=>{console.log('on port 3000')});

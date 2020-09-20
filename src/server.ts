@@ -1,11 +1,33 @@
 import { Server, createServer }  from 'http';
 import { reqListener } from './server/handler';
-import { GET, DELETE, POST, PUT } from './server/mappings';
+import { addRoute, RequestHandler } from './server/mappings';
 
-export let server: Server = createServer(reqListener);
-export const controllers = {
-    get: GET,
-    delete: DELETE,
-    post: POST,
-    put: PUT
+let server: Server = createServer(reqListener);
+
+export interface Route {
+    path: string,
+    method: 'POST' | 'GET' | 'PUT' | 'DELETE',
+    handler: RequestHandler
+}
+
+interface ServerListen {
+    (): void
+}
+
+export class ApplicationServer {
+    
+    private static context: ApplicationServer = new ApplicationServer();
+    private constructor() {}
+
+    static createServer(appRoutes: Route[]) {
+        appRoutes.forEach((route: Route) => {
+            addRoute(route.path, route.method, route.handler);
+        })
+        return this.context;
+    }
+
+    listen(port: number, cb: ServerListen) {
+        server.listen(port, cb);
+    }
+
 }
